@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italy 2026 · Trip Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#22272F;
+    --paper:#FAF6EF;
+    --card:#FFFFFF;
+    --muted:#6E727A;
+    --faint:#9A9DA3;
+    --line:#E7E0D4;
+    --line-strong:#D8D0C0;
+    /* region accents — the chromatic journey: rose → lake → alpine → lagoon → gold */
+    --c-transit:#8A93A3;
+    --c-milan:#BB4453;
+    --c-como:#2C7C9B;
+    --c-dolomites:#5C7F55;
+    --c-venice:#1C8C88;
+    --c-rome:#BE8636;
+    --accent:var(--c-milan);
+    --shadow:0 1px 2px rgba(34,39,47,.04), 0 8px 24px -12px rgba(34,39,47,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:64px 0 30px;position:relative}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .eyebrow b{color:var(--ink);font-weight:700}
+  .title{
+    font-family:'Fraunces',serif;font-weight:900;font-size:clamp(58px,13vw,118px);
+    line-height:.92;letter-spacing:-.02em;margin:18px 0 4px;
+  }
+  .title em{font-style:italic;font-weight:500;color:var(--accent);transition:color .5s ease}
+  .dates{font-family:'Fraunces',serif;font-size:clamp(20px,4vw,27px);font-weight:500;font-style:italic;color:var(--muted)}
+  .lede{margin-top:18px;max-width:54ch;color:var(--ink);font-size:16px}
+  .lede span{color:var(--muted)}
+
+  /* route ribbon */
+  .ribbon{margin:34px 0 6px;display:flex;align-items:stretch;gap:0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+  .leg{flex:1;padding:14px 12px;text-align:center;position:relative;border-right:1px solid var(--line);min-width:0}
+  .leg:last-child{border-right:0}
+  .leg .bar{height:5px;border-radius:3px;margin:0 auto 9px;width:100%;max-width:60px}
+  .leg .nm{font-family:'Fraunces',serif;font-weight:600;font-size:14px;line-height:1.15;letter-spacing:-.01em}
+  .leg .dy{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+  /* ---------- STICKY NAV ---------- */
+  nav.regionnav{position:sticky;top:0;z-index:30;background:rgba(250,246,239,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:26px}
+  .navinner{max-width:880px;margin:0 auto;padding:10px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  .navinner::-webkit-scrollbar{display:none}
+  .navinner button{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:600;white-space:nowrap;
+    border:1px solid var(--line-strong);background:var(--card);color:var(--muted);
+    padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .25s ease;
+  }
+  .navinner button:hover{color:var(--ink);border-color:var(--ink)}
+  .navinner button.on{color:#fff;border-color:transparent}
+
+  /* ---------- TIMELINE ---------- */
+  main{padding:42px 0 20px}
+  .day{position:relative;padding:0 0 14px 46px}
+  .day::before{ /* the route line */
+    content:"";position:absolute;left:11px;top:8px;bottom:-14px;width:3px;
+    background:var(--c);opacity:.32;
+  }
+  .day:last-child::before{display:none}
+  .dot{position:absolute;left:4px;top:8px;width:17px;height:17px;border-radius:50%;background:var(--paper);border:3px solid var(--c);box-shadow:0 0 0 4px var(--paper)}
+  .day-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:11px}
+  .dnum{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--faint);letter-spacing:.04em}
+  .dtitle{font-family:'Fraunces',serif;font-weight:600;font-size:24px;letter-spacing:-.01em;line-height:1.1}
+  .badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:#fff;background:var(--c);padding:3px 9px;border-radius:6px;align-self:center}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--c)}
+  ul.items{list-style:none}
+  .item{display:flex;gap:13px;padding:12px 18px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .item:last-child{border-bottom:0}
+  .time{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--ink);background:#F4EFE6;border:1px solid var(--line);padding:2px 7px;border-radius:6px;white-space:nowrap;flex-shrink:0;min-width:62px;text-align:center;margin-top:1px}
+  .time.none{background:transparent;border:0;color:var(--faint);min-width:62px}
+  .itxt{flex:1;font-size:15px;line-height:1.5}
+  .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:middle;transform:translateY(-1px)}
+  .tag.ok{background:rgba(92,127,85,.13);color:#43603d}
+  .tag.book{background:rgba(190,134,54,.15);color:#8a5f1c}
+  .tag.flag{background:rgba(187,68,83,.13);color:#9a3340}
+
+  .stay{display:flex;align-items:center;gap:10px;padding:11px 18px;background:#FBF8F2;font-size:13.5px;color:var(--muted)}
+  .stay svg{flex-shrink:0;color:var(--c)}
+  .stay b{color:var(--ink);font-weight:600}
+
+  /* ---------- LOGISTICS ---------- */
+  .logistics{padding:36px 0 10px;border-top:1px solid var(--line);margin-top:30px}
+  .sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .sec-title{font-family:'Fraunces',serif;font-weight:900;font-size:32px;letter-spacing:-.02em;margin-bottom:22px}
+
+  .book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .bcard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:16px 17px;box-shadow:var(--shadow);position:relative}
+  .bcard .k{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:flex;justify-content:space-between;align-items:center}
+  .bcard .ck{color:#5c7f55}
+  .bcard .nm{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:8px 0 4px;line-height:1.15}
+  .bcard .meta{font-size:13px;color:var(--muted);line-height:1.5}
+  .bcard .meta .mono{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink)}
+  .bcard .price{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px;margin-top:10px}
+
+  /* car card — feature it like a ticket */
+  .car{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;border-left:4px solid var(--c-dolomites)}
+  .car .left{flex:1;min-width:230px}
+  .car .route-times{display:flex;gap:26px;flex-wrap:wrap;margin-top:12px}
+  .car .rt{font-size:13px}
+  .car .rt .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .car .rt .val{font-weight:600;font-size:14px;margin-top:2px}
+  .car .rt .val .mono{font-family:'JetBrains Mono',monospace;font-weight:500}
+  .arrow{color:var(--faint);align-self:center;font-size:20px}
+
+  /* to-book + verify */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  @media(max-width:640px){.twocol{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow)}
+  .panel h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .panel.verify{background:#FCF6EC;border-color:#EBD9B8}
+  .checklist{list-style:none}
+  .checklist li{display:flex;gap:9px;padding:6px 0;font-size:14px;border-bottom:1px dashed var(--line);align-items:flex-start}
+  .checklist li:last-child{border-bottom:0}
+  .box{width:15px;height:15px;border:1.5px solid var(--line-strong);border-radius:4px;flex-shrink:0;margin-top:3px}
+  .checklist .amt{color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:12px;margin-left:auto;white-space:nowrap}
+  .vitem{display:flex;gap:10px;padding:9px 0;font-size:13.5px;border-bottom:1px dashed #E5D3AC;line-height:1.5}
+  .vitem:last-child{border-bottom:0}
+  .vitem .qm{color:#B07A1e;font-weight:700;font-family:'Fraunces',serif;font-size:16px;line-height:1.3}
+  .vitem b{color:var(--ink)}
+
+  footer{padding:30px 0 60px;color:var(--faint);font-size:12.5px;font-family:'JetBrains Mono',monospace;text-align:center;line-height:1.7}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media print{
+    nav.regionnav{display:none}
+    body{background:#fff}
+    .reveal{opacity:1!important;transform:none!important}
+    .card,.bcard,.panel{box-shadow:none}
+    .day{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="eyebrow">
+    <span><b>11</b> days</span><span><b>5</b> regions</span><span><b>2</b> cities + alps</span><span>car&nbsp;+&nbsp;rail&nbsp;+&nbsp;ferry</span>
+  </div>
+  <h1 class="title">Italy <em>2026</em></h1>
+  <div class="dates">June 25 – July 5</div>
+  <p class="lede">A loop from Milan up into the Dolomites and down through Venice to Rome. <span>Booked for Santosh Tatke &amp; party. Confirmed reservations are marked; a short to-book and verify list sits at the bottom.</span></p>
+
+  <div class="ribbon" id="ribbon">
+    <div class="leg"><div class="bar" style="background:var(--c-milan)"></div><div class="nm">Milan</div><div class="dy">Jun 26–29</div></div>
+    <div class="leg"><div class="bar" style="background:var(--c-como)"></div><div class="nm">Lake Como</div><div class="dy">Jun 28</div></div>
+    <div class="leg"><div class="bar" style="background:var(--c-dolomites)"></div><div class="nm">Dolomites</div><div class="dy">Jun 29–Jul 2</div></div>
+    <div class="leg"><div class="bar" style="background:var(--c-venice)"></div><div class="nm">Venice</div><div class="dy">Jul 2–3</div></div>
+    <div class="leg"><div class="bar" style="background:var(--c-rome)"></div><div class="nm">Rome</div><div class="dy">Jul 3–5</div></div>
+  </div>
+</header>
+
+<nav class="regionnav">
+  <div class="navinner" id="navinner"></div>
+</nav>
+
+<main class="wrap" id="timeline"></main>
+
+<section class="logistics wrap">
+  <div class="sec-eyebrow">Reservations</div>
+  <h2 class="sec-title">Everything that's booked</h2>
+  <div class="book-grid" id="bookgrid"></div>
+
+  <div class="twocol">
+    <div class="panel">
+      <h3>Still to book</h3>
+      <ul class="checklist" id="tobook"></ul>
+    </div>
+    <div class="panel verify">
+      <h3>⚠︎ Worth verifying</h3>
+      <div id="verify"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  Italy 2026 · 11 days · Milan → Lake Como → Dolomites → Venice → Rome<br>
+  Built from confirmed receipts &amp; the master itinerary
+</footer>
+
+<script>
+const REGIONS = [
+  {id:'milan', label:'Milan', c:'var(--c-milan)'},
+  {id:'como', label:'Lake Como', c:'var(--c-como)'},
+  {id:'dolomites', label:'Dolomites', c:'var(--c-dolomites)'},
+  {id:'venice', label:'Venice', c:'var(--c-venice)'},
+  {id:'rome', label:'Rome', c:'var(--c-rome)'},
+];
+const CMAP = {transit:'var(--c-transit)',milan:'var(--c-milan)',como:'var(--c-como)',dolomites:'var(--c-dolomites)',venice:'var(--c-venice)',rome:'var(--c-rome)'};
+
+const DAYS = [
+  {date:'Thu · Jun 25', region:'transit', title:'Departure', items:[
+    {time:'PM', t:'International flight out — Turkish Airlines, 1 stop via Istanbul', s:'ok'},
+  ]},
+  {date:'Fri · Jun 26', region:'milan', title:'Arrive in Milan', items:[
+    {time:'5:45 PM', t:'Land at Milan Malpensa (MXP)', s:'ok'},
+    {t:'Transfer into the city, check in, settle in'},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan · Jun 26–29', s:'book'}},
+  {date:'Sat · Jun 27', region:'milan', title:'Milan', items:[
+    {time:'1:00 PM', t:'Duomo di Milano — rooftop tour', s:'ok'},
+    {t:'Galleria Vittorio Emanuele II & the streets around it'},
+    {t:'Navigli canal district — markets and aperitivo'},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'book'}},
+  {date:'Sun · Jun 28', region:'como', title:'Lake Como day trip', items:[
+    {t:'Morning train Milan → Varenna; buy the lake ferry "free circulation" pass'},
+    {t:'Varenna: Villa Monastero, Villa Cipressi, Lover\u2019s Lane, Castello di Vezio'},
+    {t:'Ferry to Bellagio — lunch at Osteria da Lu&Ca, Villa Melzi, Punta Spartivento'},
+    {time:'3:15 PM', t:'Villa del Balbianello, Lenno (Star Wars & James Bond filming site)', s:'ok'},
+    {t:'Como: the Duomo, then funicular up to Brunate for dinner'},
+    {t:'Train back to Milan (runs until 11 PM)'},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'book'}},
+  {date:'Mon · Jun 29', region:'dolomites', title:'Milan → Cortina', items:[
+    {time:'8:30 AM', t:'Pick up rental car — Hertz, Venice Marco Polo Airport', s:'ok'},
+    {t:'Drive to San Vito di Cadore (base for Cortina & the Dolomites)', s:'flag'},
+  ], stay:{name:'Best Western Hotel Nevada', sub:'San Vito di Cadore · Jun 29–Jul 2', s:'ok'}},
+  {date:'Tue · Jun 30', region:'dolomites', title:'Dolomites — Seceda', items:[
+    {t:'Drive to Ortisei (~1 hr); ride the gondola up to Seceda before it gets busy'},
+    {t:'Seceda Ridge Trail (~1.5 hrs, easy) for the iconic ridgeline'},
+    {t:'Lunch in Ortisei'},
+    {t:'Optional: Val di Funes / St. Magdalena church, or scenic drive via Gardena Pass & Passo Falzarego (Cinque Torri if there\u2019s energy)'},
+    {t:'Dinner in Cortina'},
+  ], stay:{name:'Best Western Hotel Nevada', sub:'San Vito di Cadore', s:'ok'}},
+  {date:'Wed · Jul 1', region:'dolomites', title:'Dolomites — Braies + Tre Cime', items:[
+    {time:'6:30 AM', t:'Very early start'},
+    {time:'~8:00', t:'Lago di Braies (~45 min away) — arrive before 8 to skip the parking reservation'},
+    {t:'Walk the lake (~1.5 hrs), then drive to Tre Cime (~45 min)'},
+    {t:'Hike Tre Cime (out-and-back or full loop, 3–4 hrs)'},
+    {t:'Late lunch / dinner at Lago di Misurina, then back to Cortina'},
+  ], stay:{name:'Best Western Hotel Nevada', sub:'San Vito di Cadore', s:'ok'}},
+  {date:'Thu · Jul 2', region:'venice', title:'Cortina → Venice', items:[
+    {time:'~8:00 AM', t:'Leave Cortina (~2 hr drive)'},
+    {time:'11:30 AM', t:'Drop off rental car — Hertz, Venice Marco Polo Airport', s:'ok'},
+    {t:'Into Venice / Mestre for the night'},
+  ], stay:{name:'Four Points by Sheraton Venice', sub:'Mestre · Jul 2–3', s:'book'}},
+  {date:'Fri · Jul 3', region:'rome', title:'Venice → Rome', items:[
+    {time:'9:26 AM', t:'Train Venice → Rome (arrives ~1:30 PM)', s:'ok'},
+    {t:'Drop bags at the hotel'},
+    {time:'4:00 PM', t:'Colosseum + Roman Forum + Palatine Hill tour', s:'ok'},
+    {t:'Evening walk: Trevi Fountain, Pantheon, Piazza Navona'},
+  ], stay:{name:'Garden Palace', sub:'Centro Storico, Rome · Jul 3–5', s:'ok'}},
+  {date:'Sat · Jul 4', region:'rome', title:'Rome', items:[
+    {time:'10:45 AM', t:'Vatican City — Sistine Chapel, Vatican Museums, St. Peter\u2019s Basilica', s:'ok'},
+    {t:'Afternoon: Castel Sant\u2019Angelo, Spanish Steps, Villa Borghese — or just wander'},
+    {t:'Early dinner'},
+  ], stay:{name:'Garden Palace', sub:'Rome', s:'ok'}},
+  {date:'Sun · Jul 5', region:'transit', title:'Departure', items:[
+    {time:'7:05 AM', t:'Flight departs Rome Fiumicino (FCO) — leave very early for the airport', s:'ok'},
+  ]},
+];
+
+const TAGTXT = {ok:'confirmed', book:'to book', flag:'check'};
+
+const bedSVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>';
+
+// render timeline
+const tl = document.getElementById('timeline');
+DAYS.forEach((d,i)=>{
+  const c = CMAP[d.region];
+  const items = d.items.map(it=>{
+    const time = it.time ? `<span class="time">${it.time}</span>` : `<span class="time none">·</span>`;
+    const tag = it.s ? `<span class="tag ${it.s}">${TAGTXT[it.s]}</span>` : '';
+    return `<li class="item">${time}<span class="itxt">${it.t}${tag}</span></li>`;
+  }).join('');
+  const stay = d.stay ? `<div class="stay">${bedSVG}<span><b>${d.stay.name}</b> — ${d.stay.sub} <span class="tag ${d.stay.s}" style="margin-left:4px">${TAGTXT[d.stay.s]}</span></span></div>` : '';
+  const el = document.createElement('section');
+  el.className = 'day reveal';
+  el.dataset.region = d.region;
+  el.style.setProperty('--c', c);
+  el.innerHTML = `
+    <span class="dot"></span>
+    <div class="day-head">
+      <span class="dnum">${d.date}</span>
+      <span class="dtitle">${d.title}</span>
+    </div>
+    <div class="card"><ul class="items">${items}</ul>${stay}</div>`;
+  tl.appendChild(el);
+});
+
+// nav
+const navinner = document.getElementById('navinner');
+REGIONS.forEach(r=>{
+  const b=document.createElement('button');
+  b.textContent=r.label; b.dataset.region=r.id;
+  b.onclick=()=>{document.querySelector(`.day[data-region="${r.id}"]`).scrollIntoView({block:'start'});};
+  navinner.appendChild(b);
+});
+function setActive(region){
+  const c = CMAP[region]||CMAP.milan;
+  document.documentElement.style.setProperty('--accent', c);
+  navinner.querySelectorAll('button').forEach(b=>{
+    const on = b.dataset.region===region;
+    b.classList.toggle('on', on);
+    b.style.background = on ? CMAP[region] : '';
+  });
+}
+
+// bookings
+const BOOK = [
+  {k:'Flights', nm:'Multi-city · Turkish Airlines', meta:'Out via Istanbul · return via Istanbul<br><span class="mono">1 stop each way</span>', price:'$1,132'},
+  {k:'Hotel · Cortina', nm:'Best Western Hotel Nevada', meta:'San Vito di Cadore · Jun 29 → Jul 2 · 3 nights<br>Family Room, Mountain View', price:'$768.84'},
+  {k:'Train · Venice→Rome', nm:'Venice → Rome', meta:'Jul 3 · 9:26 AM → ~1:30 PM (4h)<br>Includes a free Rome walking tour', price:'$352.67'},
+  {k:'Hotel · Rome', nm:'Garden Palace', meta:'Via della Stelletta, Centro Storico · Jul 3 → Jul 5 · 2 nights<br>Deluxe Duplex', price:'$591.43'},
+];
+const bg = document.getElementById('bookgrid');
+
+// car ticket (featured, full width)
+bg.innerHTML = `
+  <div class="bcard car">
+    <div class="left">
+      <div class="k"><span>Rental Car</span><span class="ck">✓ confirmed</span></div>
+      <div class="nm">Jeep Avenger <span style="font-family:Inter;font-weight:400;font-size:13px;color:var(--muted)">or similar · Hertz</span></div>
+      <div class="meta">Pick-up &amp; drop-off at <b style="color:var(--ink)">Venice Marco Polo Airport</b> · 4 days, unlimited km</div>
+      <div class="route-times">
+        <div class="rt"><div class="lbl">Pick up</div><div class="val">Mon Jun 29 · <span class="mono">8:30 AM</span></div></div>
+        <span class="arrow">→</span>
+        <div class="rt"><div class="lbl">Drop off</div><div class="val">Thu Jul 2 · <span class="mono">11:30 AM</span></div></div>
+      </div>
+    </div>
+    <div style="text-align:right"><div class="k" style="justify-content:flex-end">Total</div><div class="price" style="font-size:22px">€265.15</div><div class="meta" style="font-size:11px">incl. CDW + theft protection</div></div>
+  </div>`;
+
+BOOK.forEach(b=>{
+  const el=document.createElement('div'); el.className='bcard';
+  el.innerHTML=`<div class="k"><span>${b.k}</span><span class="ck">✓</span></div><div class="nm">${b.nm}</div><div class="meta">${b.meta}</div><div class="price">${b.price}</div>`;
+  bg.appendChild(el);
+});
+
+// to-book
+const TOBOOK = [
+  {t:'Milan hotel — Art Hotel Navigli (Jun 26–29)', a:'~$1,080'},
+  {t:'Venice hotel — Four Points by Sheraton (Jul 2–3)', a:'~$363'},
+  {t:'Seceda gondola tickets', a:''},
+  {t:'Tre Cime parking reservation', a:''},
+  {t:'Lago di Braies parking reservation', a:''},
+];
+const tb=document.getElementById('tobook');
+TOBOOK.forEach(x=>{
+  const li=document.createElement('li');
+  li.innerHTML=`<span class="box"></span><span>${x.t}</span>${x.a?`<span class="amt">${x.a}</span>`:''}`;
+  tb.appendChild(li);
+});
+
+// verify
+const VERIFY = [
+  '<b>Car pickup is in Venice, not Milan.</b> The Hertz reservation picks up at Venice Marco Polo at 8:30 AM on Jun 29 — but the plan was to grab the car in Milan and drive to Cortina. You\u2019ll need a Milan → Venice transfer that morning, or change the pickup location.',
+  '<b>Flight coast: SFO or JFK?</b> The calendar/price summary says SFO, but the detailed Turkish Airlines tickets route through JFK both ways. Confirm which airport you\u2019re actually flying from.',
+  '<b>Milan hotel name.</b> The booking list says Art Hotel Navigli; the Milan day notes mention Residence Inn by Marriott Linate. Lock in one.',
+];
+const v=document.getElementById('verify');
+VERIFY.forEach(x=>{
+  const d=document.createElement('div'); d.className='vitem';
+  d.innerHTML=`<span class="qm">?</span><span>${x}</span>`;
+  v.appendChild(d);
+});
+
+// scroll spy + accent shift
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){
+    e.target.classList.add('in');
+    if(e.intersectionRatio>0.2) setActive(e.target.dataset.region);
+  }});
+},{rootMargin:'-30% 0px -55% 0px', threshold:[0,0.2,0.6]});
+document.querySelectorAll('.day').forEach(d=>obs.observe(d));
+
+// reveal-only observer for cards lower down
+const rev = new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
+setActive('milan');
+</script>
+</body>
+</html>
