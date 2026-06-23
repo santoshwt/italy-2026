@@ -105,6 +105,11 @@
   .stay{display:flex;align-items:center;gap:10px;padding:11px 18px;background:#FBF8F2;font-size:13.5px;color:var(--muted)}
   .stay svg{flex-shrink:0;color:var(--c)}
   .stay b{color:var(--ink);font-weight:600}
+  .maplink{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;transition:opacity .2s}
+  .maplink:hover{opacity:.6}
+  .pin{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--c,var(--accent));text-decoration:none;white-space:nowrap;margin-top:6px}
+  .pin:hover{text-decoration:underline}
+  .pin svg{flex-shrink:0}
 
   /* ---------- LOGISTICS ---------- */
   .logistics{padding:36px 0 10px;border-top:1px solid var(--line);margin-top:30px}
@@ -224,12 +229,12 @@ const DAYS = [
   {date:'Fri · Jun 26', region:'milan', title:'Arrive in Milan', items:[
     {time:'5:45 PM', t:'Land at Milan Malpensa (MXP)', s:'ok'},
     {t:'Transfer into the city, check in, settle in'},
-  ], stay:{name:'Art Hotel Navigli', sub:'Milan · Jun 26–29', s:'book'}},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan · Jun 26–29', s:'ok'}},
   {date:'Sat · Jun 27', region:'milan', title:'Milan', items:[
     {time:'1:00 PM', t:'Duomo di Milano — rooftop tour', s:'ok'},
     {t:'Galleria Vittorio Emanuele II & the streets around it'},
     {t:'Navigli canal district — markets and aperitivo'},
-  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'book'}},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'ok'}},
   {date:'Sun · Jun 28', region:'como', title:'Lake Como day trip', items:[
     {t:'Morning train Milan → Varenna; buy the lake ferry "free circulation" pass'},
     {t:'Varenna: Villa Monastero, Villa Cipressi, Lover\u2019s Lane, Castello di Vezio'},
@@ -237,10 +242,10 @@ const DAYS = [
     {time:'3:15 PM', t:'Villa del Balbianello, Lenno (Star Wars & James Bond filming site)', s:'ok'},
     {t:'Como: the Duomo, then funicular up to Brunate for dinner'},
     {t:'Train back to Milan (runs until 11 PM)'},
-  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'book'}},
+  ], stay:{name:'Art Hotel Navigli', sub:'Milan', s:'ok'}},
   {date:'Mon · Jun 29', region:'dolomites', title:'Milan → Cortina', items:[
-    {time:'8:30 AM', t:'Pick up rental car — Hertz, Venice Marco Polo Airport', s:'ok'},
-    {t:'Drive to San Vito di Cadore (base for Cortina & the Dolomites)', s:'flag'},
+    {time:'8:30 AM', t:'Pick up rental car — Hertz, Milan (Via Washington)', s:'ok'},
+    {t:'Drive to San Vito di Cadore (base for Cortina & the Dolomites)'},
   ], stay:{name:'Best Western Hotel Nevada', sub:'San Vito di Cadore · Jun 29–Jul 2', s:'ok'}},
   {date:'Tue · Jun 30', region:'dolomites', title:'Dolomites — Seceda', items:[
     {t:'Drive to Ortisei (~1 hr); ride the gondola up to Seceda before it gets busy'},
@@ -260,7 +265,7 @@ const DAYS = [
     {time:'~8:00 AM', t:'Leave Cortina (~2 hr drive)'},
     {time:'11:30 AM', t:'Drop off rental car — Hertz, Venice Marco Polo Airport', s:'ok'},
     {t:'Into Venice / Mestre for the night'},
-  ], stay:{name:'Four Points by Sheraton Venice', sub:'Mestre · Jul 2–3', s:'book'}},
+  ], stay:{name:'Four Points by Sheraton Venice', sub:'Mestre · Jul 2–3', s:'ok'}},
   {date:'Fri · Jul 3', region:'rome', title:'Venice → Rome', items:[
     {time:'9:26 AM', t:'Train Venice → Rome (arrives ~1:30 PM)', s:'ok'},
     {t:'Drop bags at the hotel'},
@@ -280,6 +285,18 @@ const DAYS = [
 const TAGTXT = {ok:'confirmed', book:'to book', flag:'check'};
 
 const bedSVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>';
+const pinSVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+
+// Google Maps links by hotel name (addresses where confirmed, name search otherwise)
+const MAPS = {
+  'Art Hotel Navigli':'https://www.google.com/maps/search/?api=1&query=Art%20Hotel%20Navigli%2C%20Via%20Angelo%20Carlo%20Fumagalli%204%2C%20Milan%2C%20Italy',
+  'Best Western Hotel Nevada':'https://www.google.com/maps/search/?api=1&query=Best%20Western%20Hotel%20Nevada%2C%2026%20Corso%20Italia%2C%20San%20Vito%20di%20Cadore%2C%2032046%20Italy',
+  'Four Points by Sheraton Venice':'https://www.google.com/maps/search/?api=1&query=Four%20Points%20by%20Sheraton%20Venice%20Mestre%2C%20Via%20Don%20Luigi%20Peron%204%2C%20Mestre%2C%20Venice%2C%20Italy',
+  'Garden Palace':'https://www.google.com/maps/search/?api=1&query=Garden%20Palace%2C%20Via%20della%20Stelletta%205%2C%2000186%20Rome%2C%20Italy',
+};
+const MAP_PICKUP = 'https://www.google.com/maps/search/?api=1&query=Hertz%20Milan%20Via%20Washington%2C%20Via%20Misurata%2019%2C%2020146%20Milan%2C%20Italy';
+const MAP_DROPOFF = 'https://www.google.com/maps/search/?api=1&query=Hertz%20Venice%20Marco%20Polo%20Airport%2C%20Via%20Broglio%206%2C%20Tessera%2C%2030010%20Venice%2C%20Italy';
+const pin = (url,label)=>`<a class="pin" href="${url}" target="_blank" rel="noopener">${pinSVG}${label||'Open in Maps'}</a>`;
 
 // render timeline
 const tl = document.getElementById('timeline');
@@ -290,7 +307,8 @@ DAYS.forEach((d,i)=>{
     const tag = it.s ? `<span class="tag ${it.s}">${TAGTXT[it.s]}</span>` : '';
     return `<li class="item">${time}<span class="itxt">${it.t}${tag}</span></li>`;
   }).join('');
-  const stay = d.stay ? `<div class="stay">${bedSVG}<span><b>${d.stay.name}</b> — ${d.stay.sub} <span class="tag ${d.stay.s}" style="margin-left:4px">${TAGTXT[d.stay.s]}</span></span></div>` : '';
+  const stayName = MAPS[d.stay?.name] ? `<a class="maplink" href="${MAPS[d.stay.name]}" target="_blank" rel="noopener">${d.stay.name}</a>` : (d.stay?d.stay.name:'');
+  const stay = d.stay ? `<div class="stay">${bedSVG}<span><b>${stayName}</b> — ${d.stay.sub} <span class="tag ${d.stay.s}" style="margin-left:4px">${TAGTXT[d.stay.s]}</span></span></div>` : '';
   const el = document.createElement('section');
   el.className = 'day reveal';
   el.dataset.region = d.region;
@@ -325,10 +343,12 @@ function setActive(region){
 
 // bookings
 const BOOK = [
-  {k:'Flights', nm:'Multi-city · Turkish Airlines', meta:'Out via Istanbul · return via Istanbul<br><span class="mono">1 stop each way</span>', price:'$1,132'},
-  {k:'Hotel · Cortina', nm:'Best Western Hotel Nevada', meta:'San Vito di Cadore · Jun 29 → Jul 2 · 3 nights<br>Family Room, Mountain View', price:'$768.84'},
-  {k:'Train · Venice→Rome', nm:'Venice → Rome', meta:'Jul 3 · 9:26 AM → ~1:30 PM (4h)<br>Includes a free Rome walking tour', price:'$352.67'},
-  {k:'Hotel · Rome', nm:'Garden Palace', meta:'Via della Stelletta, Centro Storico · Jul 3 → Jul 5 · 2 nights<br>Deluxe Duplex', price:'$591.43'},
+  {k:'Flights', nm:'Multi-city · Turkish Airlines', meta:'Out via Istanbul · return via Istanbul<br><span class="mono">1 stop each way</span>'},
+  {k:'Hotel · Milan', nm:'Art Hotel Navigli', meta:'Via Angelo Carlo Fumagalli 4, Navigli, Milan<br>Jun 26 → Jun 29 · 3 nights · Check-in 2:00 PM<br>'+pin(MAPS['Art Hotel Navigli'])},
+  {k:'Hotel · Cortina', nm:'Best Western Hotel Nevada', meta:'26 Corso Italia, San Vito di Cadore (BL) 32046<br>Jun 29 → Jul 2 · 3 nights · Family Room, Mountain View<br>'+pin(MAPS['Best Western Hotel Nevada'])},
+  {k:'Hotel · Venice', nm:'Four Points by Sheraton Venice', meta:'Via Don Luigi Peron 4, Mestre, Venice<br>Jul 2 → Jul 3 · 1 night · Check-in 3:00 PM<br>'+pin(MAPS['Four Points by Sheraton Venice'])},
+  {k:'Train · Venice→Rome', nm:'Venice → Rome', meta:'Jul 3 · 9:26 AM → ~1:30 PM (4h)<br>Includes a free Rome walking tour'},
+  {k:'Hotel · Rome', nm:'Garden Palace', meta:'Via della Stelletta 5, Centro Storico, 00186 Rome<br>Jul 3 → Jul 5 · 2 nights · Deluxe Duplex<br>'+pin(MAPS['Garden Palace'])},
 ];
 const bg = document.getElementById('bookgrid');
 
@@ -338,26 +358,24 @@ bg.innerHTML = `
     <div class="left">
       <div class="k"><span>Rental Car</span><span class="ck">✓ confirmed</span></div>
       <div class="nm">Jeep Avenger <span style="font-family:Inter;font-weight:400;font-size:13px;color:var(--muted)">or similar · Hertz</span></div>
-      <div class="meta">Pick-up &amp; drop-off at <b style="color:var(--ink)">Venice Marco Polo Airport</b> · 4 days, unlimited km</div>
+      <div class="meta">One-way rental · Milan to Venice · 4 days, unlimited km</div>
       <div class="route-times">
-        <div class="rt"><div class="lbl">Pick up</div><div class="val">Mon Jun 29 · <span class="mono">8:30 AM</span></div></div>
+        <div class="rt"><div class="lbl">Pick up</div><div class="val">Milan · Via Washington<br><span class="mono">Mon Jun 29 · 8:30 AM</span></div>${pin(MAP_PICKUP)}</div>
         <span class="arrow">→</span>
-        <div class="rt"><div class="lbl">Drop off</div><div class="val">Thu Jul 2 · <span class="mono">11:30 AM</span></div></div>
+        <div class="rt"><div class="lbl">Drop off</div><div class="val">Venice · Marco Polo Airport<br><span class="mono">Thu Jul 2 · 11:30 AM</span></div>${pin(MAP_DROPOFF)}</div>
       </div>
     </div>
-    <div style="text-align:right"><div class="k" style="justify-content:flex-end">Total</div><div class="price" style="font-size:22px">€265.15</div><div class="meta" style="font-size:11px">incl. CDW + theft protection</div></div>
+
   </div>`;
 
 BOOK.forEach(b=>{
   const el=document.createElement('div'); el.className='bcard';
-  el.innerHTML=`<div class="k"><span>${b.k}</span><span class="ck">✓</span></div><div class="nm">${b.nm}</div><div class="meta">${b.meta}</div><div class="price">${b.price}</div>`;
+  el.innerHTML=`<div class="k"><span>${b.k}</span><span class="ck">✓</span></div><div class="nm">${b.nm}</div><div class="meta">${b.meta}</div>`;
   bg.appendChild(el);
 });
 
 // to-book
 const TOBOOK = [
-  {t:'Milan hotel — Art Hotel Navigli (Jun 26–29)', a:'~$1,080'},
-  {t:'Venice hotel — Four Points by Sheraton (Jul 2–3)', a:'~$363'},
   {t:'Seceda gondola tickets', a:''},
   {t:'Tre Cime parking reservation', a:''},
   {t:'Lago di Braies parking reservation', a:''},
@@ -371,9 +389,7 @@ TOBOOK.forEach(x=>{
 
 // verify
 const VERIFY = [
-  '<b>Car pickup is in Venice, not Milan.</b> The Hertz reservation picks up at Venice Marco Polo at 8:30 AM on Jun 29 — but the plan was to grab the car in Milan and drive to Cortina. You\u2019ll need a Milan → Venice transfer that morning, or change the pickup location.',
   '<b>Flight coast: SFO or JFK?</b> The calendar/price summary says SFO, but the detailed Turkish Airlines tickets route through JFK both ways. Confirm which airport you\u2019re actually flying from.',
-  '<b>Milan hotel name.</b> The booking list says Art Hotel Navigli; the Milan day notes mention Residence Inn by Marriott Linate. Lock in one.',
 ];
 const v=document.getElementById('verify');
 VERIFY.forEach(x=>{
