@@ -57,12 +57,19 @@
   .lede span{color:var(--muted)}
 
   /* route ribbon */
-  .ribbon{margin:34px 0 6px;display:flex;align-items:stretch;gap:0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
+  .ribbon-row{display:flex;gap:12px;margin:34px 0 6px;align-items:stretch}
+  .ribbon{margin:0;flex:1;display:flex;align-items:stretch;gap:0;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:var(--card)}
   .leg{flex:1;padding:14px 12px;text-align:center;position:relative;border-right:1px solid var(--line);min-width:0}
   .leg:last-child{border-right:0}
   .leg .bar{height:5px;border-radius:3px;margin:0 auto 9px;width:100%;max-width:60px}
   .leg .nm{font-family:'Fraunces',serif;font-weight:600;font-size:14px;line-height:1.15;letter-spacing:-.01em}
   .leg .dy{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+  .navtile{flex:0 0 132px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;background:var(--ink);color:#fff;border-radius:14px;padding:14px 12px;box-shadow:var(--shadow);transition:transform .2s ease,opacity .2s ease}
+  .navtile:hover{transform:translateY(-2px);opacity:.93}
+  .navtile svg{margin-bottom:2px}
+  .navtile .nt-main{font-family:'Fraunces',serif;font-weight:600;font-size:16px;letter-spacing:-.01em}
+  .navtile .nt-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;opacity:.7}
+  @media(max-width:560px){.ribbon-row{flex-wrap:wrap}.navtile{flex:1 0 100%;flex-direction:row;gap:9px;padding:12px}.navtile .nt-sub{opacity:.6}}
 
   /* ---------- STICKY NAV ---------- */
   nav.regionnav{position:sticky;top:0;z-index:30;background:rgba(250,246,239,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:26px}
@@ -115,7 +122,7 @@
   .fnlink{color:var(--ink)}
 
   /* ---------- LOGISTICS ---------- */
-  .logistics{padding:36px 0 10px;border-top:1px solid var(--line);margin-top:30px}
+  .logistics{padding:36px 0 10px;border-top:1px solid var(--line);margin-top:30px;scroll-margin-top:64px}
   .sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
   .sec-title{font-family:'Fraunces',serif;font-weight:900;font-size:32px;letter-spacing:-.02em;margin-bottom:22px}
 
@@ -178,12 +185,19 @@
   <div class="dates">June 25 – July 5</div>
   <p class="lede">A loop from Milan up into the Dolomites and down through Venice to Rome. <span>Confirmed reservations are marked; a short to-book and verify list sits at the bottom.</span></p>
 
-  <div class="ribbon" id="ribbon">
-    <div class="leg"><div class="bar" style="background:var(--c-milan)"></div><div class="nm">Milan</div><div class="dy">Jun 26–29</div></div>
-    <div class="leg"><div class="bar" style="background:var(--c-como)"></div><div class="nm">Lake Como</div><div class="dy">Jun 28</div></div>
-    <div class="leg"><div class="bar" style="background:var(--c-dolomites)"></div><div class="nm">Dolomites</div><div class="dy">Jun 29–Jul 2</div></div>
-    <div class="leg"><div class="bar" style="background:var(--c-venice)"></div><div class="nm">Venice</div><div class="dy">Jul 2–3</div></div>
-    <div class="leg"><div class="bar" style="background:var(--c-rome)"></div><div class="nm">Rome</div><div class="dy">Jul 3–5</div></div>
+  <div class="ribbon-row">
+    <div class="ribbon" id="ribbon">
+      <div class="leg"><div class="bar" style="background:var(--c-milan)"></div><div class="nm">Milan</div><div class="dy">Jun 26–29</div></div>
+      <div class="leg"><div class="bar" style="background:var(--c-como)"></div><div class="nm">Lake Como</div><div class="dy">Jun 28</div></div>
+      <div class="leg"><div class="bar" style="background:var(--c-dolomites)"></div><div class="nm">Dolomites</div><div class="dy">Jun 29–Jul 2</div></div>
+      <div class="leg"><div class="bar" style="background:var(--c-venice)"></div><div class="nm">Venice</div><div class="dy">Jul 2–3</div></div>
+      <div class="leg"><div class="bar" style="background:var(--c-rome)"></div><div class="nm">Rome</div><div class="dy">Jul 3–5</div></div>
+    </div>
+    <a class="navtile" href="#reservations">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      <span class="nt-main">Navigate</span>
+      <span class="nt-sub">Rides &amp; maps</span>
+    </a>
   </div>
 </header>
 
@@ -193,7 +207,7 @@
 
 <main class="wrap" id="timeline"></main>
 
-<section class="logistics wrap">
+<section class="logistics wrap" id="reservations">
   <div class="sec-eyebrow">Reservations</div>
   <h2 class="sec-title">Everything that's booked</h2>
   <div class="book-grid" id="bookgrid"></div>
