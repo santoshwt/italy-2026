@@ -110,6 +110,8 @@
   .pin{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--c,var(--accent));text-decoration:none;white-space:nowrap;margin-top:6px}
   .pin:hover{text-decoration:underline}
   .pin svg{flex-shrink:0}
+  .pin + .pin{margin-left:14px}
+  .uberlink{color:var(--ink)}
 
   /* ---------- LOGISTICS ---------- */
   .logistics{padding:36px 0 10px;border-top:1px solid var(--line);margin-top:30px}
@@ -298,6 +300,18 @@ const MAP_PICKUP = 'https://www.google.com/maps/search/?api=1&query=Hertz%20Mila
 const MAP_DROPOFF = 'https://www.google.com/maps/search/?api=1&query=Hertz%20Venice%20Marco%20Polo%20Airport%2C%20Via%20Broglio%206%2C%20Tessera%2C%2030010%20Venice%2C%20Italy';
 const pin = (url,label)=>`<a class="pin" href="${url}" target="_blank" rel="noopener">${pinSVG}${label||'Open in Maps'}</a>`;
 
+// Uber deep links (open the Uber app / mobile site with the destination set)
+const rideSVG = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0ZM3 12l2-5a2 2 0 0 1 1.9-1.3h10.2A2 2 0 0 1 19 7l2 5M3 12h18M3 12v3M21 12v3"/></svg>';
+const UBER = {
+  'Art Hotel Navigli':'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Art%20Hotel%20Navigli&dropoff[formatted_address]=Via%20Angelo%20Carlo%20Fumagalli%204%2C%20Milan%2C%20Italy',
+  'Best Western Hotel Nevada':'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Hotel%20Nevada&dropoff[formatted_address]=26%20Corso%20Italia%2C%20San%20Vito%20di%20Cadore%2C%2032046%20Italy',
+  'Four Points by Sheraton Venice':'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Four%20Points%20Venice&dropoff[formatted_address]=Via%20Don%20Luigi%20Peron%204%2C%20Mestre%2C%20Venice%2C%20Italy',
+  'Garden Palace':'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Garden%20Palace&dropoff[formatted_address]=Via%20della%20Stelletta%205%2C%2000186%20Rome%2C%20Italy',
+};
+const UBER_PICKUP = 'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Hertz%20Milan&dropoff[formatted_address]=Via%20Misurata%2019%2C%2020146%20Milan%2C%20Italy';
+const UBER_DROPOFF = 'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[nickname]=Hertz%20Venice%20Airport&dropoff[formatted_address]=Via%20Broglio%206%2C%20Tessera%2C%2030010%20Venice%2C%20Italy';
+const uber = (url)=>`<a class="pin uberlink" href="${url}" target="_blank" rel="noopener">${rideSVG}Uber</a>`;
+
 // render timeline
 const tl = document.getElementById('timeline');
 DAYS.forEach((d,i)=>{
@@ -344,11 +358,11 @@ function setActive(region){
 // bookings
 const BOOK = [
   {k:'Flights', nm:'Multi-city · Turkish Airlines', meta:'Out via Istanbul · return via Istanbul<br><span class="mono">1 stop each way</span>'},
-  {k:'Hotel · Milan', nm:'Art Hotel Navigli', meta:'Via Angelo Carlo Fumagalli 4, Navigli, Milan<br>Jun 26 → Jun 29 · 3 nights · Check-in 2:00 PM<br>'+pin(MAPS['Art Hotel Navigli'])},
-  {k:'Hotel · Cortina', nm:'Best Western Hotel Nevada', meta:'26 Corso Italia, San Vito di Cadore (BL) 32046<br>Jun 29 → Jul 2 · 3 nights · Family Room, Mountain View<br>'+pin(MAPS['Best Western Hotel Nevada'])},
-  {k:'Hotel · Venice', nm:'Four Points by Sheraton Venice', meta:'Via Don Luigi Peron 4, Mestre, Venice<br>Jul 2 → Jul 3 · 1 night · Check-in 3:00 PM<br>'+pin(MAPS['Four Points by Sheraton Venice'])},
+  {k:'Hotel · Milan', nm:'Art Hotel Navigli', meta:'Via Angelo Carlo Fumagalli 4, Navigli, Milan<br>Jun 26 → Jun 29 · 3 nights · Check-in 2:00 PM<br>'+pin(MAPS['Art Hotel Navigli'])+uber(UBER['Art Hotel Navigli'])},
+  {k:'Hotel · Cortina', nm:'Best Western Hotel Nevada', meta:'26 Corso Italia, San Vito di Cadore (BL) 32046<br>Jun 29 → Jul 2 · 3 nights · Family Room, Mountain View<br>'+pin(MAPS['Best Western Hotel Nevada'])+uber(UBER['Best Western Hotel Nevada'])},
+  {k:'Hotel · Venice', nm:'Four Points by Sheraton Venice', meta:'Via Don Luigi Peron 4, Mestre, Venice<br>Jul 2 → Jul 3 · 1 night · Check-in 3:00 PM<br>'+pin(MAPS['Four Points by Sheraton Venice'])+uber(UBER['Four Points by Sheraton Venice'])},
   {k:'Train · Venice→Rome', nm:'Venice → Rome', meta:'Jul 3 · 9:26 AM → ~1:30 PM (4h)<br>Includes a free Rome walking tour'},
-  {k:'Hotel · Rome', nm:'Garden Palace', meta:'Via della Stelletta 5, Centro Storico, 00186 Rome<br>Jul 3 → Jul 5 · 2 nights · Deluxe Duplex<br>'+pin(MAPS['Garden Palace'])},
+  {k:'Hotel · Rome', nm:'Garden Palace', meta:'Via della Stelletta 5, Centro Storico, 00186 Rome<br>Jul 3 → Jul 5 · 2 nights · Deluxe Duplex<br>'+pin(MAPS['Garden Palace'])+uber(UBER['Garden Palace'])},
 ];
 const bg = document.getElementById('bookgrid');
 
@@ -360,9 +374,9 @@ bg.innerHTML = `
       <div class="nm">Jeep Avenger <span style="font-family:Inter;font-weight:400;font-size:13px;color:var(--muted)">or similar · Hertz</span></div>
       <div class="meta">One-way rental · Milan to Venice · 4 days, unlimited km</div>
       <div class="route-times">
-        <div class="rt"><div class="lbl">Pick up</div><div class="val">Hertz Milan · Via Washington<br>Via Misurata 19, 20146 Milan<br><span class="mono">Mon Jun 29 · 8:30 AM</span></div>${pin(MAP_PICKUP)}</div>
+        <div class="rt"><div class="lbl">Pick up</div><div class="val">Hertz Milan · Via Washington<br>Via Misurata 19, 20146 Milan<br><span class="mono">Mon Jun 29 · 8:30 AM</span></div>${pin(MAP_PICKUP)}${uber(UBER_PICKUP)}</div>
         <span class="arrow">→</span>
-        <div class="rt"><div class="lbl">Drop off</div><div class="val">Hertz Venice · Marco Polo Airport<br>Via Broglio 6, Tessera, 30010 Venice<br><span class="mono">Thu Jul 2 · 11:30 AM</span></div>${pin(MAP_DROPOFF)}</div>
+        <div class="rt"><div class="lbl">Drop off</div><div class="val">Hertz Venice · Marco Polo Airport<br>Via Broglio 6, Tessera, 30010 Venice<br><span class="mono">Thu Jul 2 · 11:30 AM</span></div>${pin(MAP_DROPOFF)}${uber(UBER_DROPOFF)}</div>
       </div>
     </div>
 
